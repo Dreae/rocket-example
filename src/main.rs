@@ -48,14 +48,14 @@ fn index() -> JSON<Vec<Post>> {
 
 #[put("/posts/new", data="<post>")]
 fn add_post(post: JSON<NewPost>) -> JSON<Post> {
-  let conn = POOL.clone().get().unwrap();
+  let conn = get_conn!();
   let new_post = post.unwrap();
   JSON(diesel::insert(&new_post).into(posts::table).get_result(&*conn).expect("Unable to add post"))
 }
 
 #[post("/posts/<post_id>/publish")]
 fn update_post(post_id: i32) -> JSON<Post> {
-  let conn = POOL.clone().get().unwrap();
+  let conn = get_conn!();
   JSON(diesel::update(posts.find(post_id)).set(published.eq(true)).get_result(&*conn).expect("Unable to update post"))
 }
 
