@@ -6,10 +6,10 @@ dependencies:
     - rm -f ~/.gitconfig
     - curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
     - $HOME/.cargo/bin/cargo install diesel_cli
+    - $HOME/.cargo/bin/diesel migration run
 test:
   override:
     - $HOME/.cargo/bin/cargo test
 compile:
   override:
-    - $HOME/.cargo/bin/diesel migration run
     - $HOME/.cargo/bin/cargo build --release
