@@ -32,7 +32,7 @@ lazy_static! {
 
 #[macro_export]
 macro_rules! get_conn {
-  () => (POOL.clone().get().unwrap())
+  () => (&*POOL.clone().get().unwrap())
 }
 
 mod api;
@@ -42,7 +42,7 @@ fn main() {
 
   {
     let conn = get_conn!();
-    diesel::migrations::run_pending_migrations(&*conn).expect("Error running migrations");
+    diesel::migrations::run_pending_migrations(conn).expect("Error running migrations");
   }
 
   rocket::ignite().mount("/api", routes![
