@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e; 
-set -x;
+set -e;
 cd target/release
 
 releases_url="https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/releases/tags/${CIRCLE_TAG}";
