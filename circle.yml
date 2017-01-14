@@ -9,8 +9,8 @@ dependencies:
     - /home/ubuntu/.cargo
   override:
     - rm -f ~/.gitconfig
-    - curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
-    - $HOME/.cargo/bin/cargo install diesel_cli
+    - if [ ! -f $HOME/.cargo/bin/cargo ] ; then curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y ; fi
+    - if [ ! -f $HOME/.cargo/bin/diesel ] ; then $HOME/.cargo/bin/cargo install diesel_cli ; fi
     - $HOME/.cargo/bin/diesel migration run
 test:
   override:
