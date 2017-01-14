@@ -1,16 +1,11 @@
-general:
-  artifacts:
-    - target/release/hello-rocket
 machine:
   environment:
     DATABASE_URL: postgres://ubuntu:@127.0.0.1:5432/circle_test
 dependencies:
-  cache_directories:
-    - /home/ubuntu/.cargo
   override:
     - rm -f ~/.gitconfig
-    - if [ ! -f $HOME/.cargo/bin/cargo ] ; then curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y ; fi
-    - if [ ! -f $HOME/.cargo/bin/diesel ] ; then $HOME/.cargo/bin/cargo install diesel_cli ; fi
+    - curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
+    - $HOME/.cargo/bin/cargo install diesel_cli
     - $HOME/.cargo/bin/diesel migration run
 test:
   override:
